@@ -26,6 +26,7 @@ inertia4jSpring = { module = "io.github.inertia4j:inertia4j-spring", version.ref
 ```
 
 **Gradle без libs.versions.toml**
+   
 Если вы не используете каталог версий, просто добавьте зависимость напрямую в build.gradle.kts:
 
 ```
@@ -35,7 +36,7 @@ dependencies {
 }
 ```
 
-Иди для build.gradle:
+Или для build.gradle:
 
 ```
 // остальные зависимости проекта...
@@ -46,9 +47,10 @@ dependencies {
 
 
 **Maven**
+   
 Если ваш проект построен на Maven, добавьте зависимость в pom.xml:
 
-```xml
+```
 <dependency>
 <!-- остальные зависимости проекта -->
     <groupId>io.github.inertia4j</groupId>
@@ -56,36 +58,46 @@ dependencies {
     <version>1.0.4</version>
 </dependency>
 ```
+
+Версия inertia4j 1.0.4 выпущена 26 мая 2025 года. 
    
 ---
    
 **Использование Inertia в контроллере**
+
 Импортируем и внедряем бин.
 ```java
 import io.github.inertia4j.spring.Inertia;
-// прочие import по вашему проеуту
+// прочие import по вашему проекту
 
 @RequiredArgsConstructor
 // ваши анотации, к примеру @RestController
 public class ExampleController {
 
     private final Inertia inertia;
+// ваш код ...    
 ```
-Можно использовать класический вариант `@Autowired` перед `private final Inertia inertia;` если не используете Lombok.
+Можно использовать класический вариант `@Autowired` перед `private final Inertia inertia;` если не хотите использовать Lombok (@RequiredArgsConstructor).
 
 **Формирования ответа**
+
 **Метод render(String page, Map<String, Object> props)**
-Метод render формирует ответ для Inertia.js на вашу фронтенд-страницу. Он используется, когда клиент делает обычный GET-запрос и ожидает увидеть страницу, наполненную актуальными данными.
+
+Метод render формирует ответ для Inertia.js на фронтенд-страницу. Он используется, когда клиент делает обычный GET-запрос и ожидает увидеть страницу, наполненную данными.
 
 Параметр page: строка, указывающая имя страницы, которая отобразится на фронте (например, компонент Vue/React с тем же именем).
 
 Параметр props: карта данных (пропсы), которые автоматически сериализуются и передаются на компонент на фронтенде. 
-`Map<String, Object> props = тут вашиданные которые хотите передать`
-
+`Map<String, Object> props = тут ваши данные которые хотите передать`
+   
+Пример: `return inertia.render("ProfilePage", props);`
+    
 **Метод redirect(String page)**
-Метод redirect создаёт инерциальный редирект — это не обычный HTTP-редирект (302/303), а внутренний механизм Inertia.js для навигации по страницам без полной перезагрузки браузера.
+Метод redirect создаёт инерциальный редирект — это не обычный HTTP-редирект (302/303), а внутренний механизм для навигации по страницам без полной перезагрузки браузера.
 
 Обычно вызывается после POST/PUT/DELETE-запроса, чтобы отправить пользователя на другую страницу или "обновить" текущую.
+   
+Пример: `return inertia.redirect("ProfilePage");`
 
 
 
