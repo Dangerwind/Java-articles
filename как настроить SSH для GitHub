@@ -1,0 +1,19 @@
+Шаг 1 — проверь есть ли ключ (в терминале на Mac):
+cat ~/.ssh/id_ed25519.pub
+Если ошибка "No such file" — генерируй новый:
+ssh-keygen -t ed25519 -C "твой@email.com"
+Жми Enter на все вопросы (без пароля).
+
+Шаг 2 — скопируй ключ:
+pbcopy < ~/.ssh/id_ed25519.pub
+
+Шаг 3 — добавь в GitHub:
+Открой https://github.com/settings/keys
+Нажми New SSH key
+Title: MacBook (любое название)
+Вставь ключ из буфера
+Add SSH key
+
+Шаг 4 — проверь что всё работает:
+ssh -T git@github.com
+Должно написать: Hi username! You've successfully authenticated
